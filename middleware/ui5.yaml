@@ -1,0 +1,7 @@
+specVersion: "4.0"
+kind: extension
+type: server-middleware
+metadata:
+  name: claude-proxy-middleware
+middleware:
+  path: claude-proxy.js

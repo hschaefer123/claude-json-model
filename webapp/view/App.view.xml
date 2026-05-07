@@ -1,0 +1,31 @@
+<mvc:View controllerName="claude.controller.App" displayBlock="true"
+    xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+    <App id="app">
+        <Page title="Claude JSON Model" backgroundDesign="Transparent">
+            <customHeader>
+                <Toolbar style="Clear">
+                    <Button icon="sap-icon://home" press="navTo('Home')"/>
+                    <Button icon="sap-icon://switch-views" tooltip="{i18n>btnFeatures}" press="navTo('Features')"/>
+                    <Button icon="sap-icon://overlay" text="Use Case Forge" press="navTo('UseCaseForge')"/>
+                    <Button icon="sap-icon://wrench" text="MCP SAP Docs" press="navTo('McpSapDocs')"/>
+                    <Button icon="sap-icon://show" text="Vision" press="navTo('Vision')"/>
+                    <ToolbarSpacer/>
+                    <Text text="{session>/costDisplay}" tooltip="Session Costs"/>
+                    <SegmentedButton id="themeSwitch" selectionChange="onThemeSwitch">
+                        <items>
+                            <SegmentedButtonItem key="light" icon="sap-icon://light-mode"/>
+                            <SegmentedButtonItem key="dark" icon="sap-icon://dark-mode"/>
+                        </items>
+                    </SegmentedButton>
+                    <SegmentedButton id="langSwitch" selectionChange="onLanguageSwitch">
+                        <items>
+                            <SegmentedButtonItem key="de" text="DE"/>
+                            <SegmentedButtonItem key="en" text="EN"/>
+                        </items>
+                    </SegmentedButton>
+                </Toolbar>
+            </customHeader>
+            <NavContainer id="appContent" autoFocus="false"/>
+        </Page>
+    </App>
+</mvc:View>

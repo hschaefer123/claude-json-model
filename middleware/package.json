@@ -1,0 +1,12 @@
+{
+  "name": "claude-proxy-middleware",
+  "version": "1.0.0",
+  "description": "UI5 Tooling middleware – proxies /v1/ requests to the Anthropic Claude API",
+  "type": "module",
+  "main": "claude-proxy.js",
+  "ui5": {
+    "metadata": {
+      "kind": "middleware"
+    }
+  }
+}

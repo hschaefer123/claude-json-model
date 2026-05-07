@@ -1,0 +1,155 @@
+{
+  "_version": "1.83.0",
+  "sap.app": {
+    "id": "claude",
+    "type": "application",
+    "i18n": {
+      "bundleUrl": "i18n/i18n.properties",
+      "supportedLocales": [
+        "de",
+        "en"
+      ]
+    },
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.22.0",
+      "toolsId": "86f59ecc-a7ad-44be-b1cb-4d3f4118a852"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "config": {
+      "fullWidth": true
+    },
+    "dependencies": {
+      "minUI5Version": "1.147.2",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "claude.i18n.i18n",
+          "supportedLocales": [
+            "de",
+            "en"
+          ]
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "rootView": {
+      "viewName": "claude.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "appContent",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "claude.view",
+        "async": true,
+        "viewPath": "claude.view"
+      },
+      "routes": [
+        {
+          "name": "Home",
+          "pattern": ":?query:",
+          "target": [
+            "Home"
+          ]
+        },
+        {
+          "name": "Features",
+          "pattern": "features:?query:",
+          "target": [
+            "Features"
+          ]
+        },
+        {
+          "name": "UseCaseForge",
+          "pattern": "usecaseforge:?query:",
+          "target": [
+            "UseCaseForge"
+          ]
+        },
+        {
+          "name": "McpSapDocs",
+          "pattern": "mcpsapdocs:?query:",
+          "target": [
+            "McpSapDocs"
+          ]
+        },
+        {
+          "name": "Vision",
+          "pattern": "vision:?query:",
+          "target": [
+            "Vision"
+          ]
+        }
+      ],
+      "targets": {
+        "Home": {
+          "id": "Home",
+          "name": "Home"
+        },
+        "Features": {
+          "id": "Features",
+          "name": "Features"
+        },
+        "UseCaseForge": {
+          "id": "UseCaseForge",
+          "name": "UseCaseForge"
+        },
+        "McpSapDocs": {
+          "id": "McpSapDocs",
+          "name": "McpSapDocs"
+        },
+        "Vision": {
+          "id": "UseCaVisionseForge",
+          "name": "Vision"
+        }
+      }
+    }
+  }
+}

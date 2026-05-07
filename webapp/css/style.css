@@ -1,0 +1,37 @@
+/* Fix CustomListItem width */
+.uResultItem.sapMLIB {
+  padding: 0;
+}
+
+.uResultItem.sapMLIB > .sapMLIBContent {
+  width: 100%;
+}
+
+/* Fix upload height */
+.sapUiSizeCompact .uFix.sapUiFup, 
+.sapUiSizeCompact .uFix.sapUiFup.sapMBarChild {
+    height: inherit;
+}
+
+/* stretch filter items */
+.uSparkInputWrap {
+  flex: 1 1 140px;
+  min-width: 140px;
+}
+
+.uSparkInputGrow {
+  flex: 2 1 180px;
+}
+
+/* Hero Image transparency */
+.sapUiTheme-sap_horizon_dark .uHeroImage {
+  opacity: 0.8;
+}
+
+.uFeatures {
+  padding: 2rem;
+}
+
+.uPreviewImage {
+    border-radius: 0.25rem;
+}

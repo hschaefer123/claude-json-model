@@ -1,0 +1,111 @@
+<mvc:View controllerName="claude.controller.Vision"
+    xmlns="sap.m" xmlns:card="sap.f.cards" xmlns:f="sap.f" xmlns:core="sap.ui.core" 
+    xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified">
+    <Page class="sapUiContentPadding" backgroundDesign="Transparent" showHeader="false">
+        <f:Card width="40rem">
+            <f:header>
+                <card:Header title="Vision" subtitle="{i18n>visionSubTitle}" statusText="✦ Claude Vision" iconSrc="sap-icon://show"/>
+            </f:header>
+            <f:content>
+                <VBox class="sapUiSmallMargin" renderType="Bare" width="100%">
+                    <!-- Filter Area -->
+                    <HBox renderType="Bare" alignItems="End">
+                        <VBox class="sapUiTinyMarginEnd">
+                            <layoutData><FlexItemData growFactor="1"/></layoutData>
+                            <Label text="{i18n>labelFile}" required="true"/>
+                            <u:FileUploader id="imageFileUploader" class="uFix" name="imageFile" width="100%"
+                                maximumFileSize="5"
+                                fileType="png,jpg,jpeg,gif,webp"
+                                mimeType="image/png,image/jpeg,image/gif,image/webp"
+                                change="onFileChange"/>
+                        </VBox>
+
+                        <VBox class="uSparkInputWrap sapUiTinyMarginEnd" renderType="Bare">
+                            <layoutData><FlexItemData growFactor="1"/></layoutData>
+                            <Label text="{i18n>labelTokenSize}" required="true"/>
+                            <Select id="qualitySelect" selectedKey="{/size}"
+                                showSecondaryValues="true">
+                                <core:ListItem key="S" text="Low (Thumbnail)" additionalText="~1.7k"/>
+                                <core:ListItem key="M" text="Medium (Screenshot)" additionalText="~6.5k"/>
+                                <core:ListItem key="L" text="High (Text)" additionalText="~14.5k"/>
+                            </Select>
+                        </VBox>   
+                    </HBox>
+                    <HBox class="sapUiTinyMarginTop" renderType="Bare" alignItems="End">
+                        <VBox class="sapUiTinyMarginEnd">        
+                            <layoutData><FlexItemData growFactor="1"/></layoutData>                    
+                            <Label text="{i18n>labelLanguages}" required="true"/>
+                            <MultiComboBox width="100%" selectedKeys="{/languages}"
+                                placeholder="{i18n>placeholderLanguages}">
+                                <core:Item key="de" text="German"/>
+                                <core:Item key="en" text="English"/>
+                                <core:Item key="fr" text="French"/>
+                                <core:Item key="es" text="Spanish"/>
+                                <core:Item key="pl" text="Polish"/>
+                                <core:Item key="ru" text="Russian"/>
+                            </MultiComboBox>
+                        </VBox>   
+
+                        <Button type="Emphasized"
+                            icon="sap-icon://ai" text="{i18n>btnSpark}"
+                            enabled="{= ${/ready} &amp;&amp; ${/vision/state} !== 'loading' }"                            
+                            press="onVisualize"/>
+
+                        <Button class="sapUiTinyMarginBegin" type="Transparent"
+                            icon="sap-icon://command-line-interfaces"
+                            tooltip="Prompt Inspector"
+                            visible="{= !!${/vision/state} }"
+                            press="onShowPrompt"/>
+                    </HBox>
+
+                    <!-- State: Idle -->
+                    <VBox class="sapUiMediumMarginTop" renderType="Bare" alignItems="Center"
+                        visible="{= !${/vision/state} || ${/vision/state} === 'idle' }">
+                        <Text text="{i18n>visionHintIdle}" textAlign="Center"/>
+                    </VBox>
+
+                    <!-- State: Loading -->
+                    <VBox alignItems="Center"
+                        busy="{= ${/vision/state} === 'loading' }" busyIndicatorDelay="0"
+                        visible="{= ${/vision/state} === 'loading' }">
+                        <Text class="sapUiLargeMarginTop" textAlign="Center" text="{i18n>loadingText}"/>
+                    </VBox>
+
+                    <!-- State: Error -->
+                    <MessageStrip class="sapUiMediumMarginTop" type="Error" showIcon="true"
+                        visible="{= ${/vision/state} === 'error' }"
+                        text="{/vision/error}"      
+                    />
+
+                    <!-- Results -->
+                    <HBox class="sapUiSmallMarginTop" renderType="Bare" alignItems="Start"
+                        visible="{= ${/vision/state} === 'results' }">
+                        <VBox class="sapUiSmallMarginEnd" width="40%">
+                            <Label text="{i18n>labelFile}"/>
+                            <Image src="{/vision/image}" width="100%" 
+                                decorative="false" densityAware="false">
+                                <detailBox>
+                                    <LightBox>
+                                        <LightBoxItem imageSrc="{/vision/image}" alt="{i18n>labelMeta}"/>
+                                    </LightBox>
+                                </detailBox>
+                            </Image>
+                        </VBox>                        
+                        <VBox renderType="Bare" width="60%">
+                            <Label text="{i18n>labelMeta}"/>
+                            <IconTabBar id="visionTabs" items="{/vision/data}" applyContentPadding="false"
+                                tabDensityMode="Compact" upperCase="true"
+                                headerMode="Inline" expandable="false" headerBackgroundDesign="Transparent">
+                                <items>
+                                    <IconTabFilter text="{language}">
+                                        <TextArea value="{description}" growing="true" enabled="false"/>
+                                    </IconTabFilter>
+                                </items>
+                            </IconTabBar>
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </f:content>    
+        </f:Card>
+    </Page>
+</mvc:View>

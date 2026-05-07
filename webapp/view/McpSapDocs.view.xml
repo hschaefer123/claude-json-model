@@ -1,0 +1,95 @@
+<mvc:View controllerName="claude.controller.McpSapDocs"
+    xmlns="sap.m" xmlns:card="sap.f.cards" xmlns:f="sap.f" xmlns:core="sap.ui.core" 
+    xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified">
+    <Page class="sapUiContentPadding" backgroundDesign="Transparent" showHeader="false">
+        <f:Card width="40rem">
+            <f:header>
+                <card:Header title="MCP SAP Docs" subtitle="{i18n>msdSubTitle}" statusText="✦ Marian" iconSrc="sap-icon://wrench"/>
+            </f:header>
+            <f:content>
+                <VBox class="sapUiSmallMargin" renderType="Bare" width="100%">
+                    <!-- Filter Area -->
+                    <HBox class="uFilterBar" renderType="Bare" alignItems="End" width="100%">
+                        <VBox class="sapUiTinyMarginEnd">
+                            <layoutData><FlexItemData growFactor="1"/></layoutData>
+                            <Label text="{i18n>labelUserPrompt}" required="true"/>
+                            <Input id="userPrompt" value="{/userPrompt}" showSuggestion="true"
+                                valueLiveUpdate="true" showClearIcon="true" submit="onSearch">
+                            <suggestionItems>
+                                <core:Item text="What are SAP OData Annotations?"/>
+                                <core:Item text="How do I implement a SAPUI5 wizard with validation?"/>
+                                <core:Item text="How do I test table interactions with wdi5?"/>
+                                <core:Item text="How do I configure S/4HANA Fiori Launchpad?"/>
+                            </suggestionItems>
+                            </Input>
+                        </VBox>
+
+                        <VBox class="sapUiTinyMarginEnd" renderType="Bare">
+                            <Label text="{i18n>labelLimit}"/>
+                            <Select id="selectedLimit" selectedKey="{/selectedLimit}" autoAdjustWidth="true">
+                            <core:Item key="3" text="3"/>
+                            <core:Item key="5" text="5"/>
+                            <core:Item key="10" text="10"/>
+                            </Select>
+                        </VBox>
+
+                        <Button type="Emphasized"
+                            icon="sap-icon://ai" text="{i18n>btnSpark}"
+                            enabled="{= ${/ready} &amp;&amp; ${/search/state} !== 'loading' }"                            
+                            press="onSearch"/>
+
+                        <Button class="sapUiTinyMarginBegin" type="Transparent"
+                            icon="sap-icon://command-line-interfaces"
+                            tooltip="Prompt Inspector"
+                            visible="{= !!${/search/state} }"
+                            press="onShowPrompt"/>
+                        </HBox>
+
+                        <!-- State: Idle -->
+                        <VBox class="sapUiMediumMarginTop" renderType="Bare" alignItems="Center"
+                            visible="{= !${/search/state} || ${/useCases/state} === 'idle' }">
+                            <Text text="{i18n>msdHintIdle}" textAlign="Center"/>
+                        </VBox>
+
+                        <!-- State: Loading -->
+                        <VBox alignItems="Center"
+                            busy="{= ${/search/state} === 'loading' }" busyIndicatorDelay="0"
+                            visible="{= ${/search/state} === 'loading' }">
+                            <Text class="sapUiLargeMarginTop" textAlign="Center" text="{/loadingText}"/>
+                        </VBox>
+
+                        <!-- State: Error -->
+                        <MessageStrip class="sapUiMediumMarginTop" type="Error" showIcon="true"
+                            visible="{= ${/search/state} === 'error' }"
+                            text="{/search/error}"/>
+
+                        <!-- Results -->
+                        <VBox renderType="Bare" visible="{= ${/search/state} === 'results' }">      
+                        <List showSeparators="None" items="{/search/data}">
+                            <!-- Search results -->
+                            <CustomListItem class="sapFCard sapUiSmallMarginTop uResultItem">
+                            <HBox class="sapUiSmallMarginTop sapUiSmallMarginBeginEnd" renderType="Bare"
+                                alignItems="Center" justifyContent="SpaceBetween">              
+                                <Title text="{title}" level="H6" wrapping="true"/>
+                                <HBox renderType="Bare" alignItems="Center">
+                                <Link text="{metadata/source}" press="onShowSource"/>
+                                <Button class="sapUiTinyMarginBegin" icon="sap-icon://detail-view" type="Transparent"
+                                    press="onFetch"/>
+                                </HBox>
+                            </HBox>
+                            <FormattedText class="sapUiSmallMargin" htmlText="{snippet}" />
+                            </CustomListItem>
+                        </List>
+
+                        <!-- Footer -->
+                        <HBox class="sapUiSmallMarginTop" renderType="Bare" alignItems="Center">
+                            <ObjectStatus class="sapUiSmallMarginEnd" state="Success"
+                                icon="sap-icon://sap-logo-shape" 
+                                text="{= ${/search/data}.length + ' ' + ${i18n>labelLimit} }"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </f:content>    
+        </f:Card>
+    </Page>
+</mvc:View>

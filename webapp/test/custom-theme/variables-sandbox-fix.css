@@ -1,0 +1,83 @@
+/* Fix for sandbox launchpad: ../test-resources/sap/ushell/bootstrap/sandbox.js 
+ * Sandbox has not been updated to use new theme vars instead using hardcoded color vars.
+ * To mimic the launchpad shell behavior, some tweaks are nessessary.
+ */
+
+#shell-header #userActionsMenuHeaderButton .sapFAvatarInitialsHolder {
+    visibility: hidden;
+}
+
+.sapUshellAnchorItemSelected {
+    color: var(--sapShell_Active_TextColor);
+}
+
+.sapUshellAnchorItem.sapUshellAnchorItemSelected::after {
+    background: var(--sapShell_Active_TextColor);
+}
+
+.sapUshellAnchorItem:hover,
+.sapUshellAnchorItem:active {
+    color: var(--sapShell_Active_TextColor);
+}
+
+.sapUshellTile:focus::after {
+    border: var(--sapShell_Active_TextColor);
+}
+
+#shell-header #userActionsMenuHeaderButton {
+    background: url("./ui5-fire.svg");
+}
+
+/* Apple Liquid Glass – Light (sap_horizon) */
+.sapUiTheme-sap_horizon .sapFCard {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(24px) saturate(180%) brightness(1.0);
+    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.0);
+    border: 1px solid rgba(255, 255, 255, 0.50);
+    border-radius: 20px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.10),
+        0 1.5px 0 rgba(255, 255, 255, 0.80) inset,
+        0 -1px 0 rgba(0, 0, 0, 0.04) inset,
+        0 0 0 0.5px rgba(255, 255, 255, 0.30) inset;
+    transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+.sapUiTheme-sap_horizon .sapFCardHeader {
+    background: transparent;
+}
+
+.sapUiTheme-sap_horizon .sapFCard:hover {
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.14),
+        0 1.5px 0 rgba(255, 255, 255, 0.90) inset,
+        0 -1px 0 rgba(0, 0, 0, 0.05) inset,
+        0 0 0 0.5px rgba(255, 255, 255, 0.40) inset;
+}
+
+/* Apple Liquid Glass – Dark (sap_horizon_dark) */
+.sapUiTheme-sap_horizon_dark .sapFCard {
+    background: rgba(31, 31, 30, 0.65);
+    backdrop-filter: blur(24px) saturate(200%) brightness(1.05);
+    -webkit-backdrop-filter: blur(24px) saturate(200%) brightness(1.05);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 20px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        0 1.5px 0 rgba(255, 255, 255, 0.45) inset,
+        0 -1px 0 rgba(0, 0, 0, 0.08) inset,
+        0 0 0 0.5px rgba(255, 255, 255, 0.12) inset;
+    transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+.sapUiTheme-sap_horizon_dark .sapFCardHeader {
+    background: transparent;
+}
+
+.sapUiTheme-sap_horizon_dark .sapFCard:hover {
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.50),
+        0 1.5px 0 rgba(255, 255, 255, 0.55) inset,
+        0 -1px 0 rgba(0, 0, 0, 0.10) inset,
+        0 0 0 0.5px rgba(255, 255, 255, 0.18) inset;
+}

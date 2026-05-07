@@ -1,0 +1,126 @@
+<mvc:View controllerName="claude.controller.UseCaseForge"
+    xmlns="sap.m" xmlns:card="sap.f.cards" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc">
+    <Page class="sapUiContentPadding" backgroundDesign="Transparent" showHeader="false">
+        <f:Card width="40rem">
+            <f:header>
+                <card:Header title="Use Case Forge" subtitle="{i18n>ucfSubTitle}" statusText="✦ Claude" iconSrc="sap-icon://overlay"/>
+            </f:header>
+            <f:content>
+                <VBox class="sapUiSmallMargin" renderType="Bare" width="100%">
+                    <!-- Filter Area -->
+                    <HBox renderType="Bare" alignItems="End" wrap="Wrap">
+                        <VBox class="uSparkInputWrap sapUiTinyMarginEnd" renderType="Bare">
+                            <Label text="{i18n>labelIndustry}" required="true"/>
+                            <Select id="industrySelect" selectedKey="{/selectedIndustry}">
+                            <core:Item key="" text="{i18n>placeholderIndustry}"/>
+                            <core:Item key="Automotive" text="{i18n>industryAutomotive}"/>
+                            <core:Item key="Manufacturing" text="{i18n>industryManufacturing}"/>
+                            <core:Item key="Logistics" text="{i18n>industryLogistics}"/>
+                            <core:Item key="Pharma" text="{i18n>industryPharma}"/>
+                            <core:Item key="PublicSector" text="{i18n>industryPublicSector}"/>
+                            <core:Item key="Retail" text="{i18n>industryRetail}"/>
+                            <core:Item key="Finance" text="{i18n>industryFinance}"/>
+                            <core:Item key="Energy" text="{i18n>industryEnergy}"/>
+                            </Select>
+                        </VBox>
+
+                        <VBox class="uSparkInputWrap uSparkInputGrow sapUiTinyMarginEnd" renderType="Bare">
+                            <Label text="{i18n>labelFocus}"/>
+                            <Input id="focusInput" placeholder="{i18n>placeholderFocus}" value="{/sapFocus}" 
+                            showClearIcon="true" submit="onGenerate"/>
+                        </VBox>
+
+                        <Button type="Emphasized"
+                            icon="sap-icon://ai" text="{i18n>btnSpark}"
+                            enabled="{= ${/ready} &amp;&amp; ${/useCases/state} !== 'loading' }"
+                            press="onGenerate"/>
+
+                        <Button class="sapUiTinyMarginBegin" type="Transparent"
+                            icon="sap-icon://command-line-interfaces"
+                            tooltip="Prompt Inspector"
+                            visible="{= !!${/useCases/state} }"
+                            press="onShowPrompt"/>
+                    </HBox>
+
+                    <!-- State: Idle -->
+                    <VBox class="sapUiMediumMarginTop" renderType="Bare" alignItems="Center"
+                        visible="{= !${/useCases/state} || ${/useCases/state} === 'idle' }">
+                        <Text text="{i18n>ucfHintIdle}" textAlign="Center"/>
+                    </VBox>
+
+                    <!-- State: Loading -->
+                    <VBox alignItems="Center"
+                        busy="{= ${/useCases/state} === 'loading' }" busyIndicatorDelay="0"
+                        visible="{= ${/useCases/state} === 'loading' }">
+                        <Text class="sapUiLargeMarginTop" textAlign="Center" text="{/loadingText}"/>
+                    </VBox>
+
+                    <!-- State: Error -->
+                    <MessageStrip class="sapUiMediumMarginTop" type="Error" showIcon="true"
+                        visible="{= ${/useCases/state} === 'error' }"
+                        text="{/useCases/error}"/>
+
+                    <!-- State: Results -->
+                    <VBox renderType="Bare" visible="{= ${/useCases/state} === 'results' }">
+                        <List id="ucList" showSeparators="None" items="{/useCases/data}">
+                            <CustomListItem class="sapFCard sapUiSmallMarginTop">
+                                <VBox class="sapUiSmallMargin">
+                                    <!-- Header -->
+                                    <HBox class="sapUiTinyMarginBottom" renderType="Bare"
+                                        alignItems="Center" justifyContent="SpaceBetween">
+                                    <Title text="{name}" level="H6" wrapping="true"/>
+                                    <Button icon="sap-icon://detail-view" text="{i18n>btnDeepDive}" type="Transparent"
+                                        press="onDeepDive"/>
+                                    </HBox>
+
+                                    <!-- Description -->
+                                    <Text class="sapUiTinyMarginBottom uSparkDesc" text="{desc}" wrapping="true"/>
+
+                                    <!-- Metrics -->
+                                    <HBox class="sapUiTinyMarginBottom" alignItems="Center" wrap="Wrap">
+
+                                    <!-- Impact -->
+                                    <HBox class="uSparkPill sapUiTinyMarginEnd sapUiTinyMarginBottom" alignItems="Center">
+                                        <Label class="uSparkPillLabel sapUiTinyMarginEnd" text="Impact"/>
+                                        <ProgressIndicator class="sapUiTinyMarginEnd" state="Success"
+                                            percentValue="{impact}" displayValue="{impact} %"/>
+                                    </HBox>
+
+                                    <!-- Effort -->
+                                    <HBox alignItems="Center" class="uSparkPill sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                                        <Label text="Effort" class="uSparkPillLabel sapUiTinyMarginEnd"/>
+                                        <ProgressIndicator class="sapUiTinyMarginEnd" state="Warning"
+                                            percentValue="{effort}" displayValue="{effort} %"/>
+                                    </HBox>
+
+                                    <!-- Horizon -->
+                                    <HBox alignItems="Center" class="uSparkPill sapUiTinyMarginBottom">
+                                        <Label text="Horizon" class="uSparkPillLabel sapUiTinyMarginEnd"/>
+                                        <ObjectStatus text="{horizon}" state="Information" inverted="true"/>
+                                    </HBox>
+                                    </HBox>
+
+                                    <!-- Tags + Action -->
+                                    <HBox alignItems="Center" wrap="Wrap">
+                                        <HBox items="{tags}" wrap="Wrap">              
+                                            <ObjectStatus class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
+                                                text="{}" state="Information" inverted="true"/>
+                                        </HBox>
+                                        <ObjectStatus class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
+                                            text="{sap}" state="Information" inverted="true"/>
+                                    </HBox>
+                                </VBox>
+                            </CustomListItem>
+                        </List>      
+
+                        <!-- Footer -->
+                        <HBox class="sapUiSmallMarginTop" renderType="Bare" alignItems="Center">
+                            <ObjectStatus class="sapUiSmallMarginEnd" state="Success" icon="sap-icon://ai" 
+                                text="{= ${/useCases/data}.length + ' Use Cases · ' + ${/selectedIndustry} }"/>        
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </f:content>    
+        </f:Card>
+    </Page>
+</mvc:View>
