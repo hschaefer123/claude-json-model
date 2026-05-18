@@ -100,13 +100,6 @@
           ]
         },
         {
-          "name": "Features",
-          "pattern": "features:?query:",
-          "target": [
-            "Features"
-          ]
-        },
-        {
           "name": "UseCaseForge",
           "pattern": "usecaseforge:?query:",
           "target": [
@@ -132,10 +125,6 @@
         "Home": {
           "id": "Home",
           "name": "Home"
-        },
-        "Features": {
-          "id": "Features",
-          "name": "Features"
         },
         "UseCaseForge": {
           "id": "UseCaseForge",
