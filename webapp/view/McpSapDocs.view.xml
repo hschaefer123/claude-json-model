@@ -1,10 +1,11 @@
 <mvc:View controllerName="claude.controller.McpSapDocs"
     xmlns="sap.m" xmlns:card="sap.f.cards" xmlns:f="sap.f" xmlns:core="sap.ui.core" 
-    xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified">
+    xmlns:mvc="sap.ui.core.mvc">
     <Page class="sapUiContentPadding" backgroundDesign="Transparent" showHeader="false">
         <f:Card width="40rem">
             <f:header>
-                <card:Header title="MCP SAP Docs" subtitle="{i18n>msdSubTitle}" statusText="✦ Marian" iconSrc="sap-icon://wrench"/>
+                <card:Header title="MCP SAP Docs" subtitle="{i18n>msdSubTitle}" 
+                    iconSrc="sap-icon://wrench" statusText="✦ Marian"/>
             </f:header>
             <f:content>
                 <VBox class="sapUiSmallMargin" renderType="Bare" width="100%">
